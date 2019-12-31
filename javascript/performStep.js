@@ -17,12 +17,50 @@ function isYOnBoard( y ) {
   return y >= 0 && y < BOARD_WE_SIZE;
 }
 
+function constrainAlongNS( x ) {
+  if ( x >= BOARD_NS_SIZE ) {
+    return BOARD_NS_SIZE - 1;
+  }
+
+  if ( x < 0 ) {
+    return 0;
+  }
+
+  return x;
+}
+
+function constrainAlongWE( y ) {
+  if ( y >= BOARD_WE_SIZE ) {
+    return BOARD_WE_SIZE - 1;
+  }
+
+  if ( y < 0 ) {
+    return 0;
+  }
+
+  return y;
+}
+
 module.exports = function performStep(initialPosition, instruction) {
   switch ( instruction ) {
     case 'NOOP':
       return copy( initialPosition );
+    case 'MOVE':
+      const deltaX = initialPosition.f == 'N' ? 1
+                     : initialPosition.f == 'S' ? -1
+                     : 0;
+      const deltaY = initialPosition.f == 'E' ? 1
+                     : initialPosition.f == 'W' ? -1
+                     : 0;
+
+      return {
+        ...initialPosition,
+        x: constrainAlongNS( initialPosition.x + deltaX ),
+        y: constrainAlongWE( initialPosition.y + deltaY )
+      };
   }
 
+  // PLACE is a special case because it is followed by a position
   if ( instruction.startsWith( 'PLACE' ) ) {
     const slicedInstruction = instruction.slice( 6 );
 

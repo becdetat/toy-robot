@@ -91,3 +91,75 @@ test( 'PLACE cannot place outside Y boundary in positive direction', () => {
 
   expect( position ).toMatchObject( getOriginPosition() );
 } );
+
+test( 'MOVE moves north-facing robot one step north', () => {
+  const position = performStep(
+    { x: 2, y: 2, f: 'N' },
+    'MOVE'
+  );
+
+  expect( position.x ).toBe( 3 );
+} );
+
+test( 'MOVE north while on the north bound does not move robot', () => {
+  const position = performStep(
+    { x: 4, y: 2, f: 'N' },
+    'MOVE'
+  );
+
+  expect( position.x ).toBe( 4 );
+} );
+
+test( 'MOVE moves south-facing robot one step south', () => {
+  const position = performStep(
+    { x: 2, y: 2, f: 'S' },
+    'MOVE'
+  );
+
+  expect( position.x ).toBe( 1 );
+} );
+
+test( 'MOVE south while on the south bound does not move robot', () => {
+  const position = performStep(
+    { x: 0, y: 2, f: 'S' },
+    'MOVE'
+  );
+
+  expect( position.x ).toBe( 0 );
+} );
+
+test( 'MOVE moves west-facing robot one step west', () => {
+  const position = performStep(
+    { x: 2, y: 2, f: 'W' },
+    'MOVE'
+  );
+
+  expect( position.y ).toBe( 1 );
+} );
+
+test( 'MOVE west while on the west bound does not move robot', () => {
+  const position = performStep(
+    { x: 2, y: 0, f: 'W' },
+    'MOVE'
+  );
+
+  expect( position.y ).toBe( 0 );
+} );
+
+test( 'MOVE moves east-facing robot one step east', () => {
+  const position = performStep(
+    { x: 2, y: 2, f: 'E' },
+    'MOVE'
+  );
+
+  expect( position.y ).toBe( 3 );
+} );
+
+test( 'MOVE east while on the east bound does not move robot', () => {
+  const position = performStep(
+    { x: 2, y: 4, f: 'E' },
+    'MOVE'
+  );
+
+  expect( position.y ).toBe( 4 );
+} );
