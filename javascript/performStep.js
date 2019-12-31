@@ -82,6 +82,11 @@ module.exports = function performStep(initialPosition, instruction) {
         f
       };
     }
+    case 'REPORT': {
+      console.log(`x: ${initialPosition.x}, y: ${initialPosition.y}, f: ${initialPosition.f}`);
+
+      return copy( initialPosition );
+    }
   }
 
   // PLACE is a special case because it is followed by a position
