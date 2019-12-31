@@ -1,5 +1,5 @@
 const readline = require( 'readline' );
-const performStep = require('./performStep');
+const performStep = require( './performStep' );
 
 const rli = readline.createInterface( process.stdin, process.stdout );
 
