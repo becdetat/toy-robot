@@ -83,7 +83,7 @@ module.exports = function performStep( initialPosition, instruction ) {
       };
     }
     case 'REPORT': {
-      console.log(`x: ${initialPosition.x}, y: ${initialPosition.y}, f: ${initialPosition.f}`);
+      console.log(`${initialPosition.x},${initialPosition.y},${initialPosition.f}`);
 
       return copy( initialPosition );
     }
