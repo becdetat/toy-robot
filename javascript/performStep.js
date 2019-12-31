@@ -41,16 +41,16 @@ function constrainAlongWE( y ) {
   return y;
 }
 
-module.exports = function performStep(initialPosition, instruction) {
+module.exports = function performStep( initialPosition, instruction ) {
   switch ( instruction ) {
     case 'NOOP':
       return copy( initialPosition );
     case 'MOVE':
-      const deltaX = initialPosition.f === 'NORTH' ? 1
-                     : initialPosition.f === 'SOUTH' ? -1
-                     : 0;
-      const deltaY = initialPosition.f === 'EAST' ? 1
+      const deltaX = initialPosition.f === 'EAST' ? 1
                      : initialPosition.f === 'WEST' ? -1
+                     : 0;
+      const deltaY = initialPosition.f === 'NORTH' ? 1
+                     : initialPosition.f === 'SOUTH' ? -1
                      : 0;
 
       return {

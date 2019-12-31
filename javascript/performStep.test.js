@@ -1,4 +1,4 @@
-const performStep = require('./performStep');
+const performStep = require( './performStep' );
 
 test( 'NOOP', () => {
   const initialPosition = { x: 1, y: 2, f: 'NORTH' };
@@ -98,16 +98,16 @@ test( 'MOVE moves north-facing robot one step north', () => {
     'MOVE'
   );
 
-  expect( position.x ).toBe( 3 );
+  expect( position.y ).toBe( 3 );
 } );
 
 test( 'MOVE north while on the north bound does not move robot', () => {
   const position = performStep(
-    { x: 4, y: 2, f: 'NORTH' },
+    { x: 2, y: 4, f: 'NORTH' },
     'MOVE'
   );
 
-  expect( position.x ).toBe( 4 );
+  expect( position.y ).toBe( 4 );
 } );
 
 test( 'MOVE moves south-facing robot one step south', () => {
@@ -116,16 +116,16 @@ test( 'MOVE moves south-facing robot one step south', () => {
     'MOVE'
   );
 
-  expect( position.x ).toBe( 1 );
+  expect( position.y ).toBe( 1 );
 } );
 
 test( 'MOVE south while on the south bound does not move robot', () => {
   const position = performStep(
-    { x: 0, y: 2, f: 'SOUTH' },
+    { x: 2, y: 0, f: 'SOUTH' },
     'MOVE'
   );
 
-  expect( position.x ).toBe( 0 );
+  expect( position.y ).toBe( 0 );
 } );
 
 test( 'MOVE moves west-facing robot one step west', () => {
@@ -134,16 +134,16 @@ test( 'MOVE moves west-facing robot one step west', () => {
     'MOVE'
   );
 
-  expect( position.y ).toBe( 1 );
+  expect( position.x ).toBe( 1 );
 } );
 
 test( 'MOVE west while on the west bound does not move robot', () => {
   const position = performStep(
-    { x: 2, y: 0, f: 'WEST' },
+    { x: 0, y: 2, f: 'WEST' },
     'MOVE'
   );
 
-  expect( position.y ).toBe( 0 );
+  expect( position.x ).toBe( 0 );
 } );
 
 test( 'MOVE moves east-facing robot one step east', () => {
@@ -152,16 +152,16 @@ test( 'MOVE moves east-facing robot one step east', () => {
     'MOVE'
   );
 
-  expect( position.y ).toBe( 3 );
+  expect( position.x ).toBe( 3 );
 } );
 
 test( 'MOVE east while on the east bound does not move robot', () => {
   const position = performStep(
-    { x: 2, y: 4, f: 'EAST' },
+    { x: 4, y: 2, f: 'EAST' },
     'MOVE'
   );
 
-  expect( position.y ).toBe( 4 );
+  expect( position.x ).toBe( 4 );
 } );
 
 function getPositionFacing( f ) {
