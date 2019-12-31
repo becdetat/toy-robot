@@ -6,7 +6,7 @@ function copy(position) {
 }
 
 function isValidFacingDirection( f ) {
-  return 'NESW'.indexOf( f ) !== -1;
+  return [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ].indexOf( f ) !== -1;
 }
 
 function isXOnBoard( x ) {
@@ -46,11 +46,11 @@ module.exports = function performStep(initialPosition, instruction) {
     case 'NOOP':
       return copy( initialPosition );
     case 'MOVE':
-      const deltaX = initialPosition.f === 'N' ? 1
-                     : initialPosition.f === 'S' ? -1
+      const deltaX = initialPosition.f === 'NORTH' ? 1
+                     : initialPosition.f === 'SOUTH' ? -1
                      : 0;
-      const deltaY = initialPosition.f === 'E' ? 1
-                     : initialPosition.f === 'W' ? -1
+      const deltaY = initialPosition.f === 'EAST' ? 1
+                     : initialPosition.f === 'WEST' ? -1
                      : 0;
 
       return {
@@ -59,10 +59,10 @@ module.exports = function performStep(initialPosition, instruction) {
         y: constrainAlongWE( initialPosition.y + deltaY )
       };
     case 'LEFT': {
-      const f = initialPosition.f === 'N' ? 'W'
-                : initialPosition.f === 'W' ? 'S'
-                : initialPosition.f === 'S' ? 'E'
-                : initialPosition.f === 'E' ? 'N'
+      const f = initialPosition.f === 'NORTH' ? 'WEST'
+                : initialPosition.f === 'WEST' ? 'SOUTH'
+                : initialPosition.f === 'SOUTH' ? 'EAST'
+                : initialPosition.f === 'EAST' ? 'NORTH'
                 : initialPosition.f;
 
       return {
@@ -71,10 +71,10 @@ module.exports = function performStep(initialPosition, instruction) {
       }
     }
     case 'RIGHT': {
-      const f = initialPosition.f === 'N' ? 'E'
-                : initialPosition.f === 'E' ? 'S'
-                : initialPosition.f === 'S' ? 'W'
-                : initialPosition.f === 'W' ? 'N'
+      const f = initialPosition.f === 'NORTH' ? 'EAST'
+                : initialPosition.f === 'EAST' ? 'SOUTH'
+                : initialPosition.f === 'SOUTH' ? 'WEST'
+                : initialPosition.f === 'WEST' ? 'NORTH'
                 : initialPosition.f;
 
       return {
@@ -91,13 +91,13 @@ module.exports = function performStep(initialPosition, instruction) {
 
   // PLACE is a special case because it is followed by a position
   if ( instruction.startsWith( 'PLACE' ) ) {
-    const slicedInstruction = instruction.slice( 6 );
+    const components = instruction.slice( 6 ).split( ',' );
 
-    if ( slicedInstruction.length != 5 ) {
+    if ( components.length != 3 ) {
       return copy( initialPosition );
     }
 
-    const [ x, y, f ] = slicedInstruction.split( ',' );
+    const [ x, y, f ] = components;
     const parsedX = parseInt( x );
     const parsedY = parseInt( y );
 

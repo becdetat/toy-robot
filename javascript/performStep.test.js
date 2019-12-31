@@ -1,24 +1,24 @@
 const performStep = require('./performStep');
 
 test( 'NOOP', () => {
-  const initialPosition = { x: 1, y: 2, f: 'N' };
+  const initialPosition = { x: 1, y: 2, f: 'NORTH' };
 
   const newPosition = performStep( initialPosition, 'NOOP' );
 
-  expect( newPosition ).toMatchObject( { x: 1, y: 2, f: 'N' } );
+  expect( newPosition ).toMatchObject( { x: 1, y: 2, f: 'NORTH' } );
 } );
 
 function getOriginPosition() {
-  return { x: 0, y: 0, f: 'N' };
+  return { x: 0, y: 0, f: 'NORTH' };
 }
 
 test( 'PLACE within table', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE 3,4,S'
+    'PLACE 3,4,SOUTH'
   );
 
-  expect( position ).toMatchObject( { x: 3, y: 4, f: 'S' } );
+  expect( position ).toMatchObject( { x: 3, y: 4, f: 'SOUTH' } );
 } );
 
 test( 'PLACE with missing value is ignored', () => {
@@ -33,7 +33,7 @@ test( 'PLACE with missing value is ignored', () => {
 test( 'PLACE with malformed X coordinate is ignored', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE N,3,S'
+    'PLACE N,3,SOUTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -41,7 +41,7 @@ test( 'PLACE with malformed X coordinate is ignored', () => {
 test( 'PLACE with malformed Y coordinate is ignored', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE 3,N,S'
+    'PLACE 3,N,SOUTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -59,7 +59,7 @@ test( 'PLACE with malformed facing direction is ignored', () => {
 test( 'PLACE cannot place outside X boundary in negative direction', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE -1,3,N'
+    'PLACE -1,3,NORTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -68,7 +68,7 @@ test( 'PLACE cannot place outside X boundary in negative direction', () => {
 test( 'PLACE cannot place outside X boundary in positive direction', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE 6,3,N'
+    'PLACE 6,3,NORTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -77,7 +77,7 @@ test( 'PLACE cannot place outside X boundary in positive direction', () => {
 test( 'PLACE cannot place outside Y boundary in negative direction', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE 1,-3,N'
+    'PLACE 1,-3,NORTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -86,7 +86,7 @@ test( 'PLACE cannot place outside Y boundary in negative direction', () => {
 test( 'PLACE cannot place outside Y boundary in positive direction', () => {
   const position = performStep(
     getOriginPosition(),
-    'PLACE 3,6,N'
+    'PLACE 3,6,NORTH'
   );
 
   expect( position ).toMatchObject( getOriginPosition() );
@@ -94,7 +94,7 @@ test( 'PLACE cannot place outside Y boundary in positive direction', () => {
 
 test( 'MOVE moves north-facing robot one step north', () => {
   const position = performStep(
-    { x: 2, y: 2, f: 'N' },
+    { x: 2, y: 2, f: 'NORTH' },
     'MOVE'
   );
 
@@ -103,7 +103,7 @@ test( 'MOVE moves north-facing robot one step north', () => {
 
 test( 'MOVE north while on the north bound does not move robot', () => {
   const position = performStep(
-    { x: 4, y: 2, f: 'N' },
+    { x: 4, y: 2, f: 'NORTH' },
     'MOVE'
   );
 
@@ -112,7 +112,7 @@ test( 'MOVE north while on the north bound does not move robot', () => {
 
 test( 'MOVE moves south-facing robot one step south', () => {
   const position = performStep(
-    { x: 2, y: 2, f: 'S' },
+    { x: 2, y: 2, f: 'SOUTH' },
     'MOVE'
   );
 
@@ -121,7 +121,7 @@ test( 'MOVE moves south-facing robot one step south', () => {
 
 test( 'MOVE south while on the south bound does not move robot', () => {
   const position = performStep(
-    { x: 0, y: 2, f: 'S' },
+    { x: 0, y: 2, f: 'SOUTH' },
     'MOVE'
   );
 
@@ -130,7 +130,7 @@ test( 'MOVE south while on the south bound does not move robot', () => {
 
 test( 'MOVE moves west-facing robot one step west', () => {
   const position = performStep(
-    { x: 2, y: 2, f: 'W' },
+    { x: 2, y: 2, f: 'WEST' },
     'MOVE'
   );
 
@@ -139,7 +139,7 @@ test( 'MOVE moves west-facing robot one step west', () => {
 
 test( 'MOVE west while on the west bound does not move robot', () => {
   const position = performStep(
-    { x: 2, y: 0, f: 'W' },
+    { x: 2, y: 0, f: 'WEST' },
     'MOVE'
   );
 
@@ -148,7 +148,7 @@ test( 'MOVE west while on the west bound does not move robot', () => {
 
 test( 'MOVE moves east-facing robot one step east', () => {
   const position = performStep(
-    { x: 2, y: 2, f: 'E' },
+    { x: 2, y: 2, f: 'EAST' },
     'MOVE'
   );
 
@@ -157,7 +157,7 @@ test( 'MOVE moves east-facing robot one step east', () => {
 
 test( 'MOVE east while on the east bound does not move robot', () => {
   const position = performStep(
-    { x: 2, y: 4, f: 'E' },
+    { x: 2, y: 4, f: 'EAST' },
     'MOVE'
   );
 
@@ -168,50 +168,50 @@ function getPositionFacing( f ) {
   return { x: 0, y: 0, f };
 }
 
-test( 'LEFT while facing N changes facing to W', () => {
-  const position = performStep( getPositionFacing( 'N' ), 'LEFT' );
+test( 'LEFT while facing NORTH changes facing to WEST', () => {
+  const position = performStep( getPositionFacing( 'NORTH' ), 'LEFT' );
 
-  expect( position.f ).toBe( 'W' );
+  expect( position.f ).toBe( 'WEST' );
 } );
 
-test( 'LEFT while facing W changes facing to S', () => {
-  const position = performStep( getPositionFacing( 'W' ), 'LEFT' );
+test( 'LEFT while facing WEST changes facing to SOUTH', () => {
+  const position = performStep( getPositionFacing( 'WEST' ), 'LEFT' );
 
-  expect( position.f ).toBe( 'S' );
+  expect( position.f ).toBe( 'SOUTH' );
 } );
 
-test( 'LEFT while facing S changes facing to E', () => {
-  const position = performStep( getPositionFacing( 'S' ), 'LEFT' );
+test( 'LEFT while facing SOUTH changes facing to EAST', () => {
+  const position = performStep( getPositionFacing( 'SOUTH' ), 'LEFT' );
 
-  expect( position.f ).toBe( 'E' );
+  expect( position.f ).toBe( 'EAST' );
 } );
 
-test( 'LEFT while facing E changes facing to N', () => {
-  const position = performStep( getPositionFacing( 'E' ), 'LEFT' );
+test( 'LEFT while facing EAST changes facing to NORTH', () => {
+  const position = performStep( getPositionFacing( 'EAST' ), 'LEFT' );
 
-  expect( position.f ).toBe( 'N' );
+  expect( position.f ).toBe( 'NORTH' );
 } );
 
-test( 'RIGHT while facing N changes facing to E', () => {
-  const position = performStep( getPositionFacing( 'N' ), 'RIGHT' );
+test( 'RIGHT while facing NORTH changes facing to EAST', () => {
+  const position = performStep( getPositionFacing( 'NORTH' ), 'RIGHT' );
 
-  expect( position.f ).toBe( 'E' );
+  expect( position.f ).toBe( 'EAST' );
 } );
 
-test( 'RIGHT while facing E changes facing to S', () => {
-  const position = performStep( getPositionFacing( 'E' ), 'RIGHT' );
+test( 'RIGHT while facing EAST changes facing to SOUTH', () => {
+  const position = performStep( getPositionFacing( 'EAST' ), 'RIGHT' );
 
-  expect( position.f ).toBe( 'S' );
+  expect( position.f ).toBe( 'SOUTH' );
 } );
 
-test( 'RIGHT while facing S changes facing to W', () => {
-  const position = performStep( getPositionFacing( 'S' ), 'RIGHT' );
+test( 'RIGHT while facing SOUTH changes facing to WEST', () => {
+  const position = performStep( getPositionFacing( 'SOUTH' ), 'RIGHT' );
 
-  expect( position.f ).toBe( 'W' );
+  expect( position.f ).toBe( 'WEST' );
 } );
 
-test( 'RIGHT while facing W changes facing to N', () => {
-  const position = performStep( getPositionFacing( 'W' ), 'RIGHT' );
+test( 'RIGHT while facing WEST changes facing to NORTH', () => {
+  const position = performStep( getPositionFacing( 'WEST' ), 'RIGHT' );
 
-  expect( position.f ).toBe( 'N' );
+  expect( position.f ).toBe( 'NORTH' );
 } );
