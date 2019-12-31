@@ -191,3 +191,27 @@ test( 'LEFT while facing E changes facing to N', () => {
 
   expect( position.f ).toBe( 'N' );
 } );
+
+test( 'RIGHT while facing N changes facing to E', () => {
+  const position = performStep( getPositionFacing( 'N' ), 'RIGHT' );
+
+  expect( position.f ).toBe( 'E' );
+} );
+
+test( 'RIGHT while facing E changes facing to S', () => {
+  const position = performStep( getPositionFacing( 'E' ), 'RIGHT' );
+
+  expect( position.f ).toBe( 'S' );
+} );
+
+test( 'RIGHT while facing S changes facing to W', () => {
+  const position = performStep( getPositionFacing( 'S' ), 'RIGHT' );
+
+  expect( position.f ).toBe( 'W' );
+} );
+
+test( 'RIGHT while facing W changes facing to N', () => {
+  const position = performStep( getPositionFacing( 'W' ), 'RIGHT' );
+
+  expect( position.f ).toBe( 'N' );
+} );

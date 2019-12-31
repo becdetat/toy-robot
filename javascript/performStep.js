@@ -70,6 +70,18 @@ module.exports = function performStep(initialPosition, instruction) {
         f
       }
     }
+    case 'RIGHT': {
+      const f = initialPosition.f === 'N' ? 'E'
+                : initialPosition.f === 'E' ? 'S'
+                : initialPosition.f === 'S' ? 'W'
+                : initialPosition.f === 'W' ? 'N'
+                : initialPosition.f;
+
+      return {
+        ...initialPosition,
+        f
+      };
+    }
   }
 
   // PLACE is a special case because it is followed by a position
