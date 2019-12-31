@@ -163,3 +163,31 @@ test( 'MOVE east while on the east bound does not move robot', () => {
 
   expect( position.y ).toBe( 4 );
 } );
+
+function getPositionFacing( f ) {
+  return { x: 0, y: 0, f };
+}
+
+test( 'LEFT while facing N changes facing to W', () => {
+  const position = performStep( getPositionFacing( 'N' ), 'LEFT' );
+
+  expect( position.f ).toBe( 'W' );
+} );
+
+test( 'LEFT while facing W changes facing to S', () => {
+  const position = performStep( getPositionFacing( 'W' ), 'LEFT' );
+
+  expect( position.f ).toBe( 'S' );
+} );
+
+test( 'LEFT while facing S changes facing to E', () => {
+  const position = performStep( getPositionFacing( 'S' ), 'LEFT' );
+
+  expect( position.f ).toBe( 'E' );
+} );
+
+test( 'LEFT while facing E changes facing to N', () => {
+  const position = performStep( getPositionFacing( 'E' ), 'LEFT' );
+
+  expect( position.f ).toBe( 'N' );
+} );

@@ -46,11 +46,11 @@ module.exports = function performStep(initialPosition, instruction) {
     case 'NOOP':
       return copy( initialPosition );
     case 'MOVE':
-      const deltaX = initialPosition.f == 'N' ? 1
-                     : initialPosition.f == 'S' ? -1
+      const deltaX = initialPosition.f === 'N' ? 1
+                     : initialPosition.f === 'S' ? -1
                      : 0;
-      const deltaY = initialPosition.f == 'E' ? 1
-                     : initialPosition.f == 'W' ? -1
+      const deltaY = initialPosition.f === 'E' ? 1
+                     : initialPosition.f === 'W' ? -1
                      : 0;
 
       return {
@@ -58,6 +58,18 @@ module.exports = function performStep(initialPosition, instruction) {
         x: constrainAlongNS( initialPosition.x + deltaX ),
         y: constrainAlongWE( initialPosition.y + deltaY )
       };
+    case 'LEFT': {
+      const f = initialPosition.f === 'N' ? 'W'
+                : initialPosition.f === 'W' ? 'S'
+                : initialPosition.f === 'S' ? 'E'
+                : initialPosition.f === 'E' ? 'N'
+                : initialPosition.f;
+
+      return {
+        ...initialPosition,
+        f
+      }
+    }
   }
 
   // PLACE is a special case because it is followed by a position
