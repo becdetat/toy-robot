@@ -10,11 +10,11 @@ function isValidFacingDirection( f ) {
 }
 
 function isXOnBoard( x ) {
-  return x >= 0 && x < BOARD_NS_SIZE;
+  return x >= 0 && x < BOARD_WE_SIZE;
 }
 
 function isYOnBoard( y ) {
-  return y >= 0 && y < BOARD_WE_SIZE;
+  return y >= 0 && y < BOARD_NS_SIZE;
 }
 
 function constrainAlongNS( x ) {
