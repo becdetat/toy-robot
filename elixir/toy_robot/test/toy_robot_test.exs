@@ -226,12 +226,39 @@ defmodule ToyRobotTest do
     assert new_position == {0, 0, "WEST"}
   end
 
- test "RIGHT while facing WEST changes facing to NORTH" do
-   new_position = ToyRobot.perform_step(
-     {0, 0, "WEST"},
-     "RIGHT"
-   )
+  test "RIGHT while facing WEST changes facing to NORTH" do
+    new_position = ToyRobot.perform_step(
+      {0, 0, "WEST"},
+      "RIGHT"
+    )
 
-   assert new_position == {0, 0, "NORTH"}
- end
+    assert new_position == {0, 0, "NORTH"}
+  end
+
+  test "Input example 1" do
+    position = ToyRobot.process_input("PLACE 0,0,NORTH
+MOVE
+REPORT")
+
+    assert position == {0, 1, "NORTH"}
+  end
+
+  test "Input example 2" do
+    position = ToyRobot.process_input("PLACE 0,0,NORTH
+LEFT
+REPORT")
+
+    assert position == {0, 0, "WEST"}
+  end
+
+  test "Input example 3" do
+    position = ToyRobot.process_input("PLACE 1,2,EAST
+MOVE
+MOVE
+LEFT
+MOVE
+REPORT")
+
+    assert position == {3, 3, "NORTH"}
+  end
 end

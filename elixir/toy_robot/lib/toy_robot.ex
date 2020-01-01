@@ -37,7 +37,7 @@ defmodule ToyRobot do
   def perform_step(initial_position, instruction) do
     {initial_x, initial_y, initial_facing} = initial_position
 
-    new_position = cond do
+    cond do
       instruction == "NOOP" -> {initial_x, initial_y, initial_facing}
       String.starts_with?(instruction, "PLACE") ->
         try do
@@ -96,9 +96,19 @@ defmodule ToyRobot do
           _ -> initial_facing
         end
         {initial_x, initial_y, new_facing}
+      instruction == "REPORT" ->
+        IO.puts("#{initial_x},#{initial_y},#{initial_facing}")
+        {initial_x, initial_y, initial_facing}
       true -> {initial_x, initial_y, initial_facing}
     end
+  end
 
-    new_position
+  def process_input(input) do
+    lines = String.split(input, ~r{(\r\n|\r|\n)})
+    Enum.reduce(
+      lines,
+      {0, 0, "NORTH"},
+      fn instruction, memo -> perform_step(memo, instruction) end
+    )
   end
 end
