@@ -17,21 +17,9 @@ function isYOnBoard( y ) {
   return y >= 0 && y < BOARD_NS_SIZE;
 }
 
-function constrainAlongNS( x ) {
-  if ( x >= BOARD_NS_SIZE ) {
+function constrainAlongNS( y ) {
+  if ( y >= BOARD_NS_SIZE ) {
     return BOARD_NS_SIZE - 1;
-  }
-
-  if ( x < 0 ) {
-    return 0;
-  }
-
-  return x;
-}
-
-function constrainAlongWE( y ) {
-  if ( y >= BOARD_WE_SIZE ) {
-    return BOARD_WE_SIZE - 1;
   }
 
   if ( y < 0 ) {
@@ -39,6 +27,18 @@ function constrainAlongWE( y ) {
   }
 
   return y;
+}
+
+function constrainAlongWE( x ) {
+  if ( x >= BOARD_WE_SIZE ) {
+    return BOARD_WE_SIZE - 1;
+  }
+
+  if ( x < 0 ) {
+    return 0;
+  }
+
+  return x;
 }
 
 module.exports = function performStep( initialPosition, instruction ) {
@@ -55,8 +55,8 @@ module.exports = function performStep( initialPosition, instruction ) {
 
       return {
         ...initialPosition,
-        x: constrainAlongNS( initialPosition.x + deltaX ),
-        y: constrainAlongWE( initialPosition.y + deltaY )
+        x: constrainAlongWE( initialPosition.x + deltaX ),
+        y: constrainAlongNS( initialPosition.y + deltaY )
       };
     case 'LEFT': {
       const f = initialPosition.f === 'NORTH' ? 'WEST'
